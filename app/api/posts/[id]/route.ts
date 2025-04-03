@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
 import { cookies, headers } from "next/headers";
-import { redirect } from "next/navigation";
 
 export async function DELETE(
-  res: Response,
+  res: Request,
   { params }: { params: { id: string } }
 ) {
   const id = params.id;

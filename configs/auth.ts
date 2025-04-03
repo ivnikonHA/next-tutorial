@@ -14,9 +14,8 @@ export const authConfig: AuthOptions = {
         email: { label: "email", type: "email" },
         password: { label: "password", type: "password" },
       },
-      authorize: async (credentials) => {
+      async authorize(credentials, _req) {
         if (!credentials?.email || !credentials.password) return null;
-
         const currentUser = users.find(
           (user) => user.email === credentials.email
         );
@@ -24,6 +23,7 @@ export const authConfig: AuthOptions = {
           const { password, ...userWithoutPassword } = currentUser;
           return userWithoutPassword as User;
         }
+        return null;
       },
     }),
   ],

@@ -13,11 +13,32 @@ async function getData(id: string) {
   return response.json();
 }
 
+async function getAllData() {
+  const response = await fetch(
+    'https://jsonplaceholder.typicode.com/posts/',
+    {
+      next: {
+        revalidate: 60,
+      },
+    }
+  );
+
+  return response.json();
+}
+
 type Props = {
   params: {
     id: string;
   };
 };
+
+export async function generateStaticParams() {
+  const posts: any[] = await getAllData();
+
+  return posts.map((post) => ({
+    slug: post.id.toString(),
+  }));
+}
 
 export async function generateMetadata({
   params: { id },
